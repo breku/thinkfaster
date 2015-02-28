@@ -1,7 +1,6 @@
 package com.kcal.service.database.security;
 
 import com.google.common.collect.Sets;
-import com.kcal.annotation.Loggable;
 import com.kcal.dao.UserDao;
 import com.kcal.model.Registration;
 import com.kcal.model.User;
@@ -50,7 +49,6 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
         return dao.findByUsername(s);
     }
 
-    @Loggable
     public void registerNewUser(Registration registration) {
         String encodedPassword = passwordEncoder.encode(registration.getPassword());
         registration.setPassword(encodedPassword);
@@ -70,7 +68,6 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
         return get(user.getId());
     }
 
-    @Loggable
     public void grantAuthorityToUser(User user, RoleName roleName) {
         Set<GrantedAuthority> authorities = user.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
@@ -84,7 +81,6 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
         update(user, "authorities", authorities);
     }
 
-    @Loggable
     public void removeAuthorityFromUser(User user, RoleName roleName) {
         Set<GrantedAuthority> authorities = user.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {

@@ -1,6 +1,5 @@
 package com.kcal.controller.security;
 
-import com.kcal.annotation.Loggable;
 import com.kcal.controller.AbstractController;
 import com.kcal.model.Registration;
 import com.kcal.service.database.security.UserService;
@@ -50,7 +49,6 @@ public class RegistrationController extends AbstractController {
         return new ModelAndView("security/registerForm", model.asMap());
     }
 
-    @Loggable
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerUser(@ModelAttribute("registrationModelAttribute") @Valid Registration registration, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

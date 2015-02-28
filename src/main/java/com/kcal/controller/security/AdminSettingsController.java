@@ -2,7 +2,6 @@ package com.kcal.controller.security;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import com.kcal.annotation.Loggable;
 import com.kcal.controller.AbstractController;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,6 @@ public class AdminSettingsController extends AbstractController {
         return new ModelAndView("/security/settings/settings", model.asMap());
     }
 
-    @Loggable(level = "info")
     @RequestMapping(value = "/admin/settings/logger/{level}", method = RequestMethod.POST)
     public ModelAndView changeRootLoggerLevel(@PathVariable("level") String level, Model model) {
         Level newLevel = Level.toLevel(level);

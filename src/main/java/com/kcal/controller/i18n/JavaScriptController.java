@@ -1,6 +1,5 @@
 package com.kcal.controller.i18n;
 
-import com.kcal.annotation.Loggable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +23,6 @@ public class JavaScriptController {
      */
     private static final String MESSAGE_BUNDLE_PATH = "internationalization/messages";
 
-    @Loggable
     @RequestMapping(value = "strings.js")
     public ModelAndView strings(HttpServletRequest request,HttpServletResponse response) {
         Locale locale = RequestContextUtils.getLocale(request);

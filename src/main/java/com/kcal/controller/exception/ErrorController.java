@@ -1,6 +1,5 @@
 package com.kcal.controller.exception;
 
-import com.kcal.annotation.Loggable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -22,7 +21,6 @@ public class ErrorController extends AbstractExceptionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorController.class);
 
 
-    @Loggable(level = "warn")
     @RequestMapping("/error/{statusCode}")
     public static final ModelAndView error(@PathVariable("statusCode") int statusCode, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

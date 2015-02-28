@@ -1,6 +1,5 @@
 package com.kcal.service.database.security;
 
-import com.kcal.annotation.Loggable;
 import com.kcal.model.Registration;
 import com.kcal.model.User;
 import com.kcal.model.UserProfile;
@@ -15,7 +14,6 @@ import com.kcal.utils.security.RoleName;
  */
 public interface UserService extends RootService<User> {
 
-    @Loggable
     void registerNewUser(Registration registration);
 
     void grantAuthorityToUser(User user, RoleName roleName);

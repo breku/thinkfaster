@@ -1,7 +1,6 @@
 package com.kcal.service.database;
 
 import com.kcal.model.User;
-import com.kcal.model.UserProfile;
 import com.kcal.model.json.UserProfileSliderJson;
 import com.kcal.model.json.XEditableForm;
 

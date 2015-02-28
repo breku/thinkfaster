@@ -1,7 +1,6 @@
 package com.kcal.model.json;
 
 import com.kcal.model.UserProfile;
-import com.kcal.model.builder.UserProfileBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**

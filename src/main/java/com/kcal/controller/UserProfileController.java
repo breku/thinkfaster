@@ -1,6 +1,5 @@
 package com.kcal.controller;
 
-import com.kcal.annotation.Loggable;
 import com.kcal.model.UserProfile;
 import com.kcal.model.json.UserProfileSliderJson;
 import com.kcal.model.json.XEditableForm;
@@ -42,7 +41,6 @@ public class UserProfileController extends AbstractController {
         this.validator = validator;
     }
 
-    @Loggable
     @RequestMapping("/user/profile")
     @Override
     public ModelAndView initView(Model model) {
