@@ -1,0 +1,2 @@
+Sorting files from the biggest to the smallest
+$ du -ah ~/Downloads/ | sort -rh | head -6

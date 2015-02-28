@@ -1,0 +1,108 @@
+.mainContent {
+    padding-top: 120px;
+}
+
+.index {
+    padding-top: 95px;
+}
+
+#avatar {
+    height: 80px;
+}
+
+.navbar-item-text {
+    padding-top: 35px !important;
+}
+
+.navbar-item-icon {
+    padding-top: 25px !important;
+}
+
+.navbar-glyph-icon {
+    font-size: 50px;
+
+}
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity 1.0s linear;
+    -moz-transition: opacity 1.0s linear;
+    -o-transition: opacity 1.0s linear;
+    transition: opacity 1.0s linear;
+}
+
+.fade-in {
+    opacity: 1;
+    -webkit-transition: opacity 0.25s linear;
+    -moz-transition: opacity 0.25s linear;
+    -o-transition: opacity 0.25s linear;
+    transition: opacity 0.25s linear;
+}
+
+.alert-sticked {
+    position: fixed;
+    top: 150;
+    left: 0;
+    border: 0;
+    z-index: 100;
+}
+
+table a {
+    padding: 5px;
+}
+
+.user-row {
+    background-color: rgba(0, 0, 255, 0.2);;
+}
+
+/* Navigation bar item */
+
+/* Brand logo */
+.logo img {
+    width: 60px;
+    padding-top: 10px;
+}
+
+/* Navigation bar */
+header > nav {
+    background-color: #ffffff !important;
+    background-image: none !important;
+}
+
+#indexContent img {
+    width: 1130px;
+    height: 200px;
+
+}
+
+.index-img {
+    width: 100%;
+    height: 300px;
+}
+
+
+#profileContent{
+    text-align: center;
+}
+
+#profileContent table{
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#foodContentHeader{
+    margin-bottom: 100px;
+}
+
+#foodContentHeader table{
+    width: 50%;
+}
+
+#DEFAULT li:hover,#MEAL0 li:hover, #MEAL1 li:hover,#MEAL2 li:hover,#MEAL3 li:hover,#MEAL4 li:hover,#MEAL5 li:hover{
+    cursor: pointer;
+}
+
+#DEFAULT li.ui-sortable-helper,#MEAL0 li.ui-sortable-helper,#MEAL1 li.ui-sortable-helper,#MEAL2 li.ui-sortable-helper,#MEAL3 li.ui-sortable-helper,#MEAL4 li.ui-sortable-helper,#MEAL5 li.ui-sortable-helper{
+    cursor: move;
+}
