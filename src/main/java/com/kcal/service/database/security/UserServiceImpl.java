@@ -2,6 +2,7 @@ package com.kcal.service.database.security;
 
 import com.google.common.collect.Sets;
 import com.kcal.dao.UserDao;
+import com.kcal.dao.UserDaoImpl;
 import com.kcal.model.Registration;
 import com.kcal.model.User;
 import com.kcal.model.UserProfile;

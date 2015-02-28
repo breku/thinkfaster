@@ -1,6 +1,7 @@
 package com.kcal.service.database;
 
 import com.kcal.dao.AbstractRootDao;
+import com.kcal.dao.RootDao;
 import com.kcal.model.RootEntity;
 
 import java.util.Collection;
@@ -10,7 +11,7 @@ import java.util.List;
  * User: Breku
  * Date: 2014-09-13
  */
-public abstract class AbstractRootService<E extends RootEntity, T extends AbstractRootDao> implements RootService<E> {
+public abstract class AbstractRootService<E extends RootEntity, T extends RootDao> implements RootService<E> {
 
     protected T dao;
 

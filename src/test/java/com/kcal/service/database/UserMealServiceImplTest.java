@@ -1,6 +1,6 @@
 package com.kcal.service.database;
 
-import com.kcal.dao.UserMealDao;
+import com.kcal.dao.UserMealDaoImpl;
 import com.kcal.model.Food;
 import com.kcal.model.User;
 import com.kcal.model.UserMeal;
@@ -33,7 +33,7 @@ public class UserMealServiceImplTest {
     private FoodService foodService;
 
     @Mock
-    private UserMealDao userMealDao;
+    private UserMealDaoImpl userMealDao;
 
     @Before
     public void init(){

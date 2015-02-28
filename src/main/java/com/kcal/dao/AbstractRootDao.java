@@ -1,6 +1,7 @@
 package com.kcal.dao;
 
 import com.kcal.model.RootEntity;
+import com.mongodb.Mongo;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -12,15 +13,15 @@ import java.util.List;
  * User: Breku
  * Date: 2014-09-13
  */
-public abstract class AbstractRootDao<T extends RootEntity> {
+public abstract class AbstractRootDao<T extends RootEntity> implements RootDao<T>{
 
 
     protected MongoTemplate template;
 
     private Class<T> type;
 
-    public AbstractRootDao(MongoTemplate template, Class<T> type) {
-        this.template = template;
+    public AbstractRootDao(MongoTemplate mongoTemplate, Class<T> type) {
+        this.template =mongoTemplate;
         this.type = type;
     }
 
@@ -54,7 +55,5 @@ public abstract class AbstractRootDao<T extends RootEntity> {
         return template.findAll(type);
     }
 
-    public void setTemplate(MongoTemplate template) {
-        this.template = template;
-    }
+
 }
