@@ -1,7 +1,6 @@
 package com.kcal.service.database;
 
 import com.kcal.dao.FoodDao;
-import com.kcal.dao.FoodDaoImpl;
 import com.kcal.model.Food;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

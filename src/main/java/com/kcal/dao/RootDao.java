@@ -1,9 +1,6 @@
 package com.kcal.dao;
 
 import com.kcal.model.RootEntity;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package com.kcal.dao;
 
+import com.googlecode.objectify.ObjectifyService;
 import com.kcal.model.CountType;
+import com.kcal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,9 +13,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CountTypeDaoImpl extends AbstractRootDao<CountType> implements CountTypeDao {
 
-    @Autowired
-    public CountTypeDaoImpl(MongoTemplate template) {
-        super(template,CountType.class);
+    static {
+        ObjectifyService.register(CountType.class);
+    }
+
+
+    public CountTypeDaoImpl() {
+        super(CountType.class);
 
     }
 

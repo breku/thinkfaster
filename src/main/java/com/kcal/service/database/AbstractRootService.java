@@ -1,6 +1,5 @@
 package com.kcal.service.database;
 
-import com.kcal.dao.AbstractRootDao;
 import com.kcal.dao.RootDao;
 import com.kcal.model.RootEntity;
 

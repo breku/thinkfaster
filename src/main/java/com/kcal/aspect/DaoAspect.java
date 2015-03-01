@@ -1,17 +1,13 @@
 package com.kcal.aspect;
 
 
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.util.Closeable;
 import com.kcal.model.RootEntity;
-import com.kcal.service.CounterService;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.Calendar;
 
 /**
  * User: Breku
@@ -22,15 +18,6 @@ import java.util.Calendar;
 @Aspect
 public class DaoAspect {
 
-    private CounterService counterService;
-
-    private MongoTemplate template;
-
-    @Autowired
-    public DaoAspect(CounterService counterService, MongoTemplate template) {
-        this.counterService = counterService;
-        this.template = template;
-    }
 
     /**
      * Any method in dao package named "save"
@@ -40,14 +27,28 @@ public class DaoAspect {
         // only pointcut
     }
 
-    @Before("saveEntity(obj)")
-    public void addEntityId(RootEntity obj) {
-        obj.setId(counterService.getNextSequence(template.getCollectionName(obj.getClass())));
+    @Pointcut("execution(* com.kcal.dao..get(..)) && args(id)")
+    private void getEntity(long id) {
+        // only pointcut
     }
 
-    @Before("saveEntity(obj)")
-    public void addCreationDate(RootEntity obj) {
-        obj.setCreationDate(Calendar.getInstance().getTime());
+    @Around("saveEntity(obj)")
+    public void transactionSave(ProceedingJoinPoint joinPoint, RootEntity obj) throws Throwable {
+        Closeable closeable = ObjectifyService.begin();
+        joinPoint.proceed();
+        closeable.close();
     }
+
+
+    @Around("getEntity(id)")
+    public <T extends RootEntity> T transactionGet(ProceedingJoinPoint joinPoint, long id) throws Throwable {
+        Closeable closeable = ObjectifyService.begin();
+        return (T) joinPoint.proceed();
+//        closeable.close();
+    }
+//
+//    @After("saveEntity(obj)")
+//    public void endTransaction(RootEntity obj) {
+//    }
 
 }

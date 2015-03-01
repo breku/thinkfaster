@@ -2,9 +2,9 @@ package com.kcal.service.database.security;
 
 import com.google.common.collect.Sets;
 import com.kcal.dao.UserDao;
-import com.kcal.dao.UserDaoImpl;
 import com.kcal.model.Registration;
 import com.kcal.model.User;
+import com.kcal.model.UserAuthority;
 import com.kcal.model.UserProfile;
 import com.kcal.model.json.UserProfileSliderJson;
 import com.kcal.model.json.XEditableForm;
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,7 +54,7 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
         registration.setPassword(encodedPassword);
         registration.setConfirmPassword(encodedPassword);
         User user = new User(registration.getUsername(), registration.getEmail(), registration.getPassword(), true, true, true, true,
-                Sets.<GrantedAuthority>newHashSet(new SimpleGrantedAuthority(RoleName.ROLE_USER.name())));
+                Sets.newHashSet(new UserAuthority(RoleName.ROLE_USER.name())));
         save(user);
     }
 
@@ -70,21 +69,21 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
     }
 
     public void grantAuthorityToUser(User user, RoleName roleName) {
-        Set<GrantedAuthority> authorities = user.getAuthorities();
+        Set<UserAuthority> authorities = user.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals(roleName.name())) {
                 LOGGER.warn(String.format("User %s already has this authority: %s", user, roleName));
                 return;
             }
         }
-        SimpleGrantedAuthority newAuthority = new SimpleGrantedAuthority(roleName.name());
+        UserAuthority newAuthority = new UserAuthority(roleName.name());
         authorities.add(newAuthority);
         update(user, "authorities", authorities);
     }
 
     public void removeAuthorityFromUser(User user, RoleName roleName) {
-        Set<GrantedAuthority> authorities = user.getAuthorities();
-        for (GrantedAuthority grantedAuthority : authorities) {
+        Set<UserAuthority> authorities = user.getAuthorities();
+        for (UserAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals(roleName.name())) {
                 authorities.remove(grantedAuthority);
                 update(user, "authorities", authorities);

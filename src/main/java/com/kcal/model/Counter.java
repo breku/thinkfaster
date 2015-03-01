@@ -1,15 +1,11 @@
 package com.kcal.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 /**
  * User: Breku
  * Date: 02.07.14
  */
-@Document(collection = "counters")
 public class Counter {
-    @Id
+
     private String id;
 
     private long seq;

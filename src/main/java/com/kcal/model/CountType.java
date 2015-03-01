@@ -1,14 +1,18 @@
 package com.kcal.model;
 
+import com.googlecode.objectify.annotation.Entity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 
 /**
  * User: Breku
  * Date: 2014-09-14
  */
-@Document(collection = "countTypes")
-public class CountType extends RootEntity {
+@Entity
+public class CountType extends RootEntity implements Serializable {
+
+//    private static final long serialVersionUID = 1L;
 
     private String name;
 

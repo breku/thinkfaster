@@ -2,13 +2,11 @@ package com.kcal.model;
 
 import com.kcal.model.utils.MealNumber;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * User: Breku
  * Date: 2014-09-13
  */
-@Document(collection = "foods")
 public class Food extends RootEntity {
 
     private String name;

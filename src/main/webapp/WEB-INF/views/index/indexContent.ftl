@@ -15,4 +15,11 @@
     co tam 2
     <br><br>
     <br><br>
+
+    <h1>Users</h1>
+
+<#list userList as user>
+    <li>${user.username} ${user.email}</li>
+</#list>
+
 </div>

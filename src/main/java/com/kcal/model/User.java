@@ -1,26 +1,32 @@
 package com.kcal.model;
 
+import com.google.appengine.repackaged.com.google.api.client.util.Sets;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
 import com.kcal.model.builder.UserProfileBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collections;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.HashSet;
 
 /**
  * User: Breku
  * Date: 2014-09-15
  */
-@Document(collection = "users")
-public class User extends RootEntity implements UserDetails {
+@Entity
+public class User extends RootEntity implements UserDetails, Serializable {
+
+//    private static final long serialVersionUID = 1L;
+
 
     private String password;
-    private final String username;
+
+    @Index
+    private String username;
     private String email;
-    private Set<GrantedAuthority> authorities;
+    private HashSet<UserAuthority> authorities = new HashSet<>();
     private final boolean accountNonExpired;
     private final boolean accountNonLocked;
     private final boolean credentialsNonExpired;
@@ -30,15 +36,15 @@ public class User extends RootEntity implements UserDetails {
 
 
     public User() {
-        this(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY, Collections.<GrantedAuthority>emptySet());
+        this(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY, Sets.<UserAuthority>newHashSet());
     }
 
-    private User(String username, String email, String password, Set<GrantedAuthority> authorities) {
+    private User(String username, String email, String password, HashSet<UserAuthority> authorities) {
         this(username, email, password, true, true, true, true, authorities);
     }
 
 
-    public User(String username, String email, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, Set<GrantedAuthority> authorities) {
+    public User(String username, String email, String password, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled, HashSet<UserAuthority> authorities) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -69,9 +75,10 @@ public class User extends RootEntity implements UserDetails {
     }
 
     @Override
-    public Set<GrantedAuthority> getAuthorities() {
+    public HashSet<UserAuthority> getAuthorities() {
         return authorities;
     }
+
 
     @Override
     public String getPassword() {

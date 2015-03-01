@@ -1,29 +1,32 @@
 package com.kcal.model;
 
+import com.googlecode.objectify.annotation.Id;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * User: Breku
  * Date: 2014-09-13
  */
-public class RootEntity {
+
+public class RootEntity{
 
     @Id
-    private long id;
+    private Long id;
+
     private Date creationDate;
 
 
     public RootEntity() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

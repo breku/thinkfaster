@@ -1,8 +1,6 @@
 package com.kcal.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
@@ -10,12 +8,10 @@ import java.util.Map;
  * User: Breku
  * Date: 2014-09-24
  */
-@Document(collection = "USER_MEALS")
 public class UserMeal extends RootEntity {
 
     private String name;
 
-    @DBRef
     private User user;
 
     private Map<Long, Food> foodMap;

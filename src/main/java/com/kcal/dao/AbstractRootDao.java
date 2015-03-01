@@ -1,43 +1,43 @@
 package com.kcal.dao;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Work;
+import com.googlecode.objectify.cmd.LoadType;
+import com.googlecode.objectify.util.Closeable;
 import com.kcal.model.RootEntity;
-import com.mongodb.Mongo;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+import com.kcal.model.User;
 
 import java.util.List;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
+import static com.googlecode.objectify.ObjectifyService.run;
 
 /**
  * User: Breku
  * Date: 2014-09-13
  */
-public abstract class AbstractRootDao<T extends RootEntity> implements RootDao<T>{
+public abstract class AbstractRootDao<T extends RootEntity> implements RootDao<T> {
 
-
-    protected MongoTemplate template;
 
     private Class<T> type;
 
-    public AbstractRootDao(MongoTemplate mongoTemplate, Class<T> type) {
-        this.template =mongoTemplate;
+    public AbstractRootDao(Class<T> type) {
         this.type = type;
     }
 
     public void save(T obj) {
-        template.save(obj);
+        Closeable closeable = ObjectifyService.begin();
+        ObjectifyService.ofy().save().entity(obj).now();
+        closeable.close();
     }
 
     public void update(T obj, String propertyName, Object newValue) {
-        Query query = new Query(Criteria.where("_id").is(obj.getId()));
-        Update update = new Update();
-        update.set(propertyName, newValue);
-        template.updateFirst(query, update, type);
+
     }
 
     public void removeCollection() {
-        template.dropCollection(type);
     }
 
     /**
@@ -47,12 +47,17 @@ public abstract class AbstractRootDao<T extends RootEntity> implements RootDao<T
      * @return
      */
     public T get(long id) {
-        Query query = new Query(Criteria.where("_id").is(id));
-        return (T) template.findOne(query, type);
+        Closeable closeable = ObjectifyService.begin();
+        T result = ofy().load().type(type).id(id).now();
+        closeable.close();
+        return result;
     }
 
     public List<T> getAll() {
-        return template.findAll(type);
+        Closeable closeable = ObjectifyService.begin();
+        List<T> list = ofy().load().type(type).list();
+        closeable.close();
+        return list;
     }
 
 

@@ -1,40 +1,41 @@
 package com.kcal.dao;
 
 
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.LoadType;
+import com.googlecode.objectify.util.Closeable;
 import com.kcal.model.User;
-import com.mongodb.Mongo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
  * User: Breku
  * Date: 2014-09-16
  */
 @Repository
-public class UserDaoImpl extends AbstractRootDao<User> implements UserDao{
+public class UserDaoImpl extends AbstractRootDao<User> implements UserDao {
 
-    @Autowired
-    public UserDaoImpl(MongoTemplate template) {
-        super(template,User.class);
+    static {
+        ObjectifyService.register(User.class);
+    }
+
+
+    public UserDaoImpl() {
+        super(User.class);
     }
 
     public User findByUsername(String username) {
-        Query query = new Query(Criteria.where("username").is(username));
-        return template.findOne(query, User.class);
+        Closeable closeable = ObjectifyService.begin();
+        User user = ofy().load().type(User.class).filter("username",username).first().now();
+//        closeable.close();
+        return user;
     }
 
-    @Override
-    public List<User> getAll() {
-        Query query = new Query();
-        query.with(new Sort(Sort.Direction.ASC, "username"));
-        return template.find(query, User.class);
-    }
+
 
 
 }
