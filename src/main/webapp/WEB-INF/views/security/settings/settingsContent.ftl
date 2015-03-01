@@ -15,11 +15,7 @@
             <td>${currentLoggerLevel}</td>
             <td><#include "loggerForm.ftl"/></td>
         </tr>
-        <tr>
-            <td><@spring.message "settingsContent.form.excel"/></td>
-            <td></td>
-            <td><#include "excelFileForm.ftl"/></td>
-        </tr>
+
 
         <tr>
             <td><@spring.message "settingsContent.table.userList"/></td>

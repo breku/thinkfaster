@@ -1,7 +1,5 @@
 package com.kcal.controller.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Logger;
 
 /**
  * User: Breku
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ErrorController extends AbstractExceptionController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorController.class);
+    private static final Logger LOGGER = Logger.getLogger(ErrorController.class.getName());
 
 
     @RequestMapping("/error/{statusCode}")
@@ -26,7 +25,7 @@ public class ErrorController extends AbstractExceptionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 
-        LOGGER.warn(">> statusCode={} User={} ", statusCode, auth.getPrincipal());
+        LOGGER.warning(String.format(">> statusCode=%s User=%s ", statusCode, auth.getPrincipal()));
         response.setStatus(statusCode);
         ModelAndView mav = new ModelAndView();
         mav.addObject("statusCode", statusCode);

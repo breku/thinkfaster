@@ -17,9 +17,9 @@
     <br><br>
 
     <h1>Users</h1>
-
+<#if userList?? >
 <#list userList as user>
     <li>${user.username} ${user.email}</li>
 </#list>
-
+</#if>
 </div>

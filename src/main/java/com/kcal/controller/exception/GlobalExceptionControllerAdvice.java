@@ -1,7 +1,5 @@
 package com.kcal.controller.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * User: Breku
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionControllerAdvice extends AbstractExceptionController {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionControllerAdvice.class);
+    private static final Logger LOGGER = Logger.getLogger(GlobalExceptionControllerAdvice.class.getName());
 
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
@@ -35,8 +35,8 @@ public class GlobalExceptionControllerAdvice extends AbstractExceptionController
 
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null)
             throw e;
-        LOGGER.error(">> [url={} user={}]", req.getRequestURL(), auth.getName());
-        LOGGER.error(">> ", e);
+        LOGGER.log(Level.SEVERE, ">> [url={} user={}]", new Object[]{req.getRequestURL(), auth.getName()});
+        LOGGER.log(Level.SEVERE, ">> Exception: ", e);
         // Otherwise setup and send the user to a default error-view.
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", e);

@@ -5,14 +5,8 @@ import com.kcal.dao.UserDao;
 import com.kcal.model.Registration;
 import com.kcal.model.User;
 import com.kcal.model.UserAuthority;
-import com.kcal.model.UserProfile;
-import com.kcal.model.json.UserProfileSliderJson;
-import com.kcal.model.json.XEditableForm;
 import com.kcal.service.database.AbstractRootService;
-import com.kcal.service.database.UserProfileService;
 import com.kcal.utils.security.RoleName;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * User: Breku
@@ -31,17 +26,15 @@ import java.util.Set;
 @Service
 public class UserServiceImpl extends AbstractRootService<User, UserDao> implements UserService, UserDetailsService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class.getName());
 
     private PasswordEncoder passwordEncoder;
 
-    private UserProfileService userProfileService;
 
     @Autowired
-    public UserServiceImpl(UserDao dao, PasswordEncoder passwordEncoder, UserProfileService userProfileService) {
+    public UserServiceImpl(UserDao dao, PasswordEncoder passwordEncoder) {
         super(dao);
         this.passwordEncoder = passwordEncoder;
-        this.userProfileService = userProfileService;
     }
 
     @Override
@@ -72,7 +65,7 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
         Set<UserAuthority> authorities = user.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals(roleName.name())) {
-                LOGGER.warn(String.format("User %s already has this authority: %s", user, roleName));
+                LOGGER.warning(String.format("User %s already has this authority: %s", user, roleName));
                 return;
             }
         }
@@ -91,27 +84,6 @@ public class UserServiceImpl extends AbstractRootService<User, UserDao> implemen
             }
         }
     }
-
-    @Override
-    public void updateProfile(UserProfileSliderJson json) {
-        User user = getCurrentUser();
-        userProfileService.updateProfile(user, json);
-        update(user, "userProfile", user.getUserProfile());
-    }
-
-    @Override
-    public void updateProfile(XEditableForm form) {
-        User user = getCurrentUser();
-        userProfileService.updateProfile(user, form);
-        update(user, "userProfile", user.getUserProfile());
-
-    }
-
-    @Override
-    public UserProfile getUserProfile() {
-        return getCurrentUser().getUserProfile();
-    }
-
 
     @Override
     public User findByName(String name) {

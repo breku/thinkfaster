@@ -1,12 +1,12 @@
 package com.kcal.configuration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.logging.Logger;
 
 /**
  * User: Breku
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
+    private static final Logger LOGGER = Logger.getLogger(WebConfig.class.getName());
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -31,10 +31,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
 
-//    @Bean
-//    public CommonsMultipartResolver getMultipartResolver() {
-//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-//        multipartResolver.setMaxUploadSize(500000);
-//        return multipartResolver;
-//    }
 }

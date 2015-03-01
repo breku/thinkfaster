@@ -4,7 +4,7 @@
             +
         </button>
         <ul class="dropdown-menu" role="menu">
-        <#list ["error","warn","info","debug","trace","all","off"] as level>
+        <#list ["SEVERE","WARNING","INFO","CONFIG","FINE","FINER","FINEST"] as level>
             <li><a href="#" onclick="submit_form(this,'/${level}') ">${level}</a></li>
         </#list>
         </ul>

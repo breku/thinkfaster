@@ -9,6 +9,7 @@ import com.googlecode.objectify.util.Closeable;
 import com.kcal.model.RootEntity;
 import com.kcal.model.User;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -57,7 +58,11 @@ public abstract class AbstractRootDao<T extends RootEntity> implements RootDao<T
         Closeable closeable = ObjectifyService.begin();
         List<T> list = ofy().load().type(type).list();
         closeable.close();
-        return list;
+        if(list != null){
+            return list;
+        }
+        return Collections.emptyList();
+
     }
 
 

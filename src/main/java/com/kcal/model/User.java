@@ -3,7 +3,6 @@ package com.kcal.model;
 import com.google.appengine.repackaged.com.google.api.client.util.Sets;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
-import com.kcal.model.builder.UserProfileBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,8 +31,6 @@ public class User extends RootEntity implements UserDetails, Serializable {
     private final boolean credentialsNonExpired;
     private final boolean enabled;
 
-    private UserProfile userProfile;
-
 
     public User() {
         this(StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY, Sets.<UserAuthority>newHashSet());
@@ -53,7 +50,6 @@ public class User extends RootEntity implements UserDetails, Serializable {
         this.credentialsNonExpired = credentialsNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.authorities = authorities;
-        this.userProfile = new UserProfileBuilder().defaultValues().build();
     }
 
 
@@ -110,14 +106,6 @@ public class User extends RootEntity implements UserDetails, Serializable {
         return enabled;
     }
 
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
-
 
     @Override
     public String toString() {
@@ -131,7 +119,6 @@ public class User extends RootEntity implements UserDetails, Serializable {
                 .append("accountNonLocked", accountNonLocked)
                 .append("credentialsNonExpired", credentialsNonExpired)
                 .append("enabled", enabled)
-                .append("userProfile", userProfile)
                 .toString();
     }
 }

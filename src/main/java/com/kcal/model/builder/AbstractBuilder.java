@@ -1,13 +1,12 @@
 package com.kcal.model.builder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * User: Breku
@@ -22,22 +21,20 @@ public abstract class AbstractBuilder<T> {
         return Double.parseDouble(DEFAULT_DECIMAL_FORMAT.format(d));
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractBuilder.class.getName());
 
 
-    public AbstractBuilder(T obj){
+    public AbstractBuilder(T obj) {
         this.obj = obj;
     }
 
-    public AbstractBuilder(){
+    public AbstractBuilder() {
         Type type = getClass().getGenericSuperclass();
         ParameterizedType paramType = (ParameterizedType) type;
         try {
-            this.obj =  ((Class<T>) paramType.getActualTypeArguments()[0]).newInstance();
-        } catch (InstantiationException e) {
-            LOGGER.error("Error creating new builder",e);
-        } catch (IllegalAccessException e) {
-            LOGGER.error("Error creating new builder",e);
+            this.obj = ((Class<T>) paramType.getActualTypeArguments()[0]).newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new builder", e);
         }
     }
 

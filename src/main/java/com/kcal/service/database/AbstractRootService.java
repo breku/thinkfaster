@@ -12,6 +12,7 @@ import java.util.List;
  */
 public abstract class AbstractRootService<E extends RootEntity, T extends RootDao> implements RootService<E> {
 
+
     protected T dao;
 
     protected AbstractRootService(T dao) {

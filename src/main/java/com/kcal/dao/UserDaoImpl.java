@@ -31,7 +31,7 @@ public class UserDaoImpl extends AbstractRootDao<User> implements UserDao {
     public User findByUsername(String username) {
         Closeable closeable = ObjectifyService.begin();
         User user = ofy().load().type(User.class).filter("username",username).first().now();
-//        closeable.close();
+        closeable.close();
         return user;
     }
 
